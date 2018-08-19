@@ -13,10 +13,10 @@ class TestSingleton
     // public function that creates only one instance of TestSingleton class
     public static function getInstance()
     {
-        if (static::$instance === null) {
-            static::$instance = new static;
+        if (self::$instance === null) {
+            self::$instance = new self;
         }
-        return static::$instance;
+        return self::$instance;
     }
 
     // seter for $testVariable
@@ -31,10 +31,11 @@ class TestSingleton
     }
 }
 
+// create instance of TestSingleton class using getInstance static method
 $instance = TestSingleton::getInstance();
 var_dump($instance);
 
-// class that inherits TestSingleton class and contains $greeting field as well as public constructor
+// class that inherits TestSingleton class
 class Inheriter extends TestSingleton
 {
     public $greeting;
@@ -44,10 +45,15 @@ class Inheriter extends TestSingleton
     {
         $this->greeting = 'Hello world!';
     }
+    // overriding getInstance parent method in order to evade using Singleton pattern in inheriting classes
+    public static function getInstance()
+    {
+        return new self();
+    }
 }
-
-//$one = Inheriter::getInstance();
-//var_dump($one);
+//create instance od Inheriter class using getInstance method but because it has been overridden the Singleton pattern doesn't work here anymore. It simply creates new instance of Inheriter class using static method.
+$one = Inheriter::getInstance();
+var_dump($one);
 
 // create instance of Inheriter class
 $test = new Inheriter();
