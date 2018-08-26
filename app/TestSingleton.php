@@ -1,6 +1,6 @@
 <?php
 
-namespace Singleton;
+namespace App;
 
 class TestSingleton
 {
@@ -13,10 +13,10 @@ class TestSingleton
     // public function that creates only one instance of TestSingleton class
     public static function getInstance()
     {
-        if (self::$instance === null) {
-            self::$instance = new self;
+        if (static::$instance === null) {
+            static::$instance = new static;
         }
-        return self::$instance;
+        return static::$instance;
     }
 
     // seter for $testVariable
@@ -45,15 +45,12 @@ class Inheriter extends TestSingleton
     {
         $this->greeting = 'Hello world!';
     }
-    // overriding getInstance parent method in order to evade using Singleton pattern in inheriting classes
-    public static function getInstance()
-    {
-        return new self();
-    }
 }
-//create instance od Inheriter class using getInstance method but because it has been overridden the Singleton pattern doesn't work here anymore. It simply creates new instance of Inheriter class using static method.
-$one = Inheriter::getInstance();
-var_dump($one);
+
+// this code below does not work because instance Inheriter class has no access to private $instance property
+
+//$one = Inheriter::getInstance();
+//var_dump($one);
 
 // create instance of Inheriter class
 $test = new Inheriter();
