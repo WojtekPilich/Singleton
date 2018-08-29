@@ -1,7 +1,6 @@
 <?php
 
-use App\TestSingleton;
-use App\Inheriter;
+use App\{TestSingleton, Inheriter};
 
 class SingletonTest extends PHPUnit\Framework\TestCase
 {
